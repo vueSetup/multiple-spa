@@ -10,8 +10,9 @@
         "single-spa": "yarn workspace single-spa start",
         "qiankun": "yarn workspace qiankun start",
         "micro-app": "pnpm --filter micro-app start",
-        "app1": "pnpm --filter vue-antd-pro-3 serve",
-        "app2": "pnpm --filter vue-antd-pro-4 vite:dev"
+        "app1": "pnpm --filter vue-antd-pro-4 vite:dev",
+        "app2": "pnpm --filter vue-antd-pro-3 serve",
+        "app3": "pnpm --filter vue-antd-pro-4 serve"
     },
     "devDependencies": {
         "lerna": "^4.0.0"

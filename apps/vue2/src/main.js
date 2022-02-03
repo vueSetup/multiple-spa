@@ -32,11 +32,18 @@ Vue.component('page-header-wrapper', PageHeaderWrapper)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 
-new Vue({
-  router,
-  store,
-  i18n,
-  // init localstorage, vuex, Logo message
-  created: bootstrap,
-  render: h => h(App)
+const app = new Vue({
+    router,
+    store,
+    i18n,
+    // init localstorage, vuex, Logo message
+    created: bootstrap,
+    render: (h) => h(App)
 }).$mount('#app')
+console.log('微应用app2渲染了')
+
+// 监听卸载操作
+window.addEventListener('unmount', function () {
+    app.$destroy()
+    console.log('微应用app2卸载了')
+})

@@ -2,20 +2,20 @@ import type { ConfigEnv, UserConfig } from 'vite';
 import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
 import createMockServer from './build/mockServer';
+import path from 'path';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
   return {
-    base: env.VITE_APP_PUBLIC_PATH,
+    base: env.VITE_BASE_URL,
     // 兼容 Cli
     define: {
+      'process.env.BASE_URL': JSON.stringify(env.VITE_BASE_URL),
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
-      'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
     plugins: [vue(), vueJsx()],
     build: {
@@ -66,6 +66,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
     server: {
       host: true,
+      port: 6001,
       proxy: {
         '/api': {
           // backend url

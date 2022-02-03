@@ -5,12 +5,12 @@ const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
 const createThemeColorReplacerPlugin = require('./config/plugin.config')
 
-function resolve(dir) {
+function resolve (dir) {
     return path.join(__dirname, dir)
 }
 
 // check Git
-function getGitHash() {
+function getGitHash () {
     try {
         return GitRevision.version()
     } catch (e) {}
@@ -38,6 +38,7 @@ const assetsCDN = {
 }
 
 module.exports = {
+    publicPath: process.env.VUE_PUBLIC_PATH,
     configureWebpack: {
         // webpack plugins
         plugins: [
@@ -97,7 +98,10 @@ module.exports = {
     },
     devServer: {
         // development server port 8000
-        port: 8000
+        port: 6002,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
         // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
         // proxy: {
         //   '/api': {

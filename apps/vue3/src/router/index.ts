@@ -498,8 +498,19 @@ export const staticRoutes: MenuDataItem[] = [
   },
 ];
 
+
+declare global {
+  interface Window {
+    microApp: any
+    __MICRO_APP_NAME__: string
+    __MICRO_APP_ENVIRONMENT__: string
+    __MICRO_APP_BASE_ROUTE__: string
+  }
+}
+
 const router = createRouter({
-  history: createWebHistory(process.env.VUE_APP_PUBLIC_PATH),
+  history: createWebHistory(window.__MICRO_APP_BASE_ROUTE__ || process.env.BASE_URL),
+  // history: createWebHashHistory(window.__MICRO_APP_BASE_ROUTE__ || process.env.BASE_URL),
   routes: staticRoutes,
 });
 
