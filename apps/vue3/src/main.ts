@@ -109,5 +109,10 @@ app
   .component(Authority.name, Authority);
 
 useIcons(app);
+const container = document.querySelector("#app")
+if(container){
+  app.mount('#app');
+}else{
+  app.mount('#vite-app');
+}
 
-app.mount('#app');
