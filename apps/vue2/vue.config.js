@@ -4,16 +4,17 @@ const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
 const createThemeColorReplacerPlugin = require('./config/plugin.config')
+const p = require('./package.json')
 
-function resolve (dir) {
+function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
 // check Git
-function getGitHash () {
+function getGitHash() {
     try {
         return GitRevision.version()
-    } catch (e) {}
+    } catch (e) { }
     return 'unknown'
 }
 
@@ -51,7 +52,12 @@ module.exports = {
             })
         ],
         // if prod, add externals
-        externals: isProd ? assetsCDN.externals : {}
+        externals: isProd ? assetsCDN.externals : {},
+        output: {
+            library: `${p.name}-[name]`,
+            libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+            jsonpFunction: `webpackJsonp_${p.name}`
+        }
     },
 
     chainWebpack: (config) => {

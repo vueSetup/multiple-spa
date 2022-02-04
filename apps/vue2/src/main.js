@@ -16,7 +16,7 @@ import themePluginConfig from '../config/themePluginConfig'
 // WARNING: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.
 import './mock'
 
-import bootstrap from './core/bootstrap'
+import init from './core/bootstrap'
 import './core/lazy_use' // use lazy load components
 import './permission' // permission control
 import './utils/filter' // global filter
@@ -38,7 +38,7 @@ const app = new Vue({
     store,
     i18n,
     // init localstorage, vuex, Logo message
-    created: bootstrap,
+    created: init,
     render: (h) => h(App)
 }).$mount('#app')
 console.log('微应用app2渲染了')
@@ -48,3 +48,33 @@ window.addEventListener('unmount', function () {
     app.$destroy()
     console.log('微应用app2卸载了')
 })
+
+let instance = null
+
+function render(props = {}) {
+    const { container } = props
+
+    instance = new Vue({
+        router,
+        render: (h) => h(App),
+    }).$mount(container ? container.querySelector('#app') : '#app')
+}
+
+// 独立运行时
+if (!window.__POWERED_BY_QIANKUN__) {
+    render()
+}
+
+export async function bootstrap() {
+    console.log('[vue] vue app bootstraped');
+}
+export async function mount(props = {}) {
+    console.log('[vue] props from main framework', props)
+    render(props)
+}
+export async function unmount() {
+    instance.$destroy();
+    instance.$el.innerHTML = '';
+    instance = null;
+    // router = null;
+}
