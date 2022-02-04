@@ -1,3 +1,4 @@
+import './public-path';
 import 'ant-design-vue/dist/antd.less';
 import {
   Layout,
