@@ -1,6 +1,6 @@
 import type { Component } from 'vue';
 import { defineAsyncComponent, h } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import type { MenuDataItem } from './typing';
 import Layout from '@/layouts/index.vue';
 // import UserLayout from '@/layouts/user-layout.vue';
@@ -509,8 +509,7 @@ declare global {
 }
 
 const router = createRouter({
-  history: createWebHistory(window.__MICRO_APP_BASE_ROUTE__ || process.env.BASE_URL),
-  // history: createWebHashHistory(window.__MICRO_APP_BASE_ROUTE__ || process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: staticRoutes,
 });
 
