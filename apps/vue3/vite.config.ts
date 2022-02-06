@@ -6,10 +6,14 @@ import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
 import { join } from 'path';
 import { writeFileSync } from 'fs';
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import qiankun from 'vite-plugin-qiankun';
+import { name } from './package.json';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
+  const useDevMode = true;
   return {
     base: env.VITE_BASE_URL,
     // 兼容 Cli
@@ -20,6 +24,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     plugins: [
       vue(),
       vueJsx(),
+      ...(
+        useDevMode ? [] : [
+          reactRefresh()
+        ]
+      ),
+      qiankun(`${name}`, { useDevMode }),
       // 自定义插件
       (function () {
         let basePath = ''
@@ -43,7 +53,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
               }
             }
           },
-        }
+        };
       })() as any],
     build: {
       cssCodeSplit: false,

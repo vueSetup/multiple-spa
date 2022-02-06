@@ -45,6 +45,7 @@ import {
   Badge,
 } from 'ant-design-vue';
 import { createApp } from 'vue';
+import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper';
 import router from './router';
 import store from './store';
 import locale from './locales';
@@ -173,7 +174,7 @@ function render() {
   console.log('instance', instance);
 }
 
-if (!window.__POWERED_BY_QIANKUN__) {
+if (!(window.__POWERED_BY_QIANKUN__ || qiankunWindow.__POWERED_BY_QIANKUN__)) {
   render();
 }
 
@@ -191,4 +192,28 @@ export async function unmount() {
   instance.$destroy?.();
   instance.$el.innerHTML = '';
   instance = null;
+}
+
+// if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
+//   render();
+// }
+
+if (qiankunWindow.__POWERED_BY_QIANKUN__ && import.meta.env.VITE_API) {
+  renderWithQiankun({
+    bootstrap() {
+      console.log('[vite] vite app bootstraped');
+    },
+
+    mount(props) {
+      console.log('[vite] vite app mount', props);
+      render();
+    },
+
+    unmount() {
+      console.log('unmount', instance);
+      instance.$destroy?.();
+      instance.$el.innerHTML = '';
+      instance = null;
+    },
+  });
 }
