@@ -1,4 +1,5 @@
 const path = require("path")
+const { name } = require('./package.json')
 // const webpack = require('webpack');
 const { IgnorePlugin } = require("webpack")
 const { createMockMiddleware } = require("umi-mock-middleware")
@@ -17,6 +18,10 @@ function resolve(dir) {
 module.exports = {
   publicPath: process.env.VUE_PUBLIC_PATH,
   configureWebpack: {
+    output: {
+      library: `${name}-[name]`,
+      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+    },
     plugins: [
       // Ignore all locale files of moment.js
       new IgnorePlugin({

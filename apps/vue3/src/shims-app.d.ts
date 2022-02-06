@@ -70,3 +70,4 @@ declare module 'moment/locale/*' {
   const locale: LocaleSpecification & { readonly [key: string]: string };
   export default locale;
 }
+
