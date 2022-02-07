@@ -39,7 +39,7 @@ const assetsCDN = {
 }
 
 module.exports = {
-    publicPath: process.env.VUE_PUBLIC_PATH,
+    publicPath: process.env.BASE_URL,
     configureWebpack: {
         // webpack plugins
         plugins: [

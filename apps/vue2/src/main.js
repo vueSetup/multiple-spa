@@ -33,58 +33,57 @@ Vue.component('page-header-wrapper', PageHeaderWrapper)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 
-// const app = new Vue({
-//     router,
-//     store,
-//     i18n,
-//     // init localstorage, vuex, Logo message
-//     created: init,
-//     render: (h) => h(App)
-// }).$mount('#app')
-// console.log('微应用app2渲染了')
+const app = new Vue({
+    router,
+    store,
+    i18n,
+    // init localstorage, vuex, Logo message
+    created: init,
+    render: (h) => h(App)
+}).$mount('#app')
+console.log('微应用app2渲染了')
 
-// // 监听卸载操作
-// window.addEventListener('unmount', function () {
-//     app.$destroy()
-//     console.log('微应用app2卸载了')
-// })
+// micro-app:监听卸载操作
+window.addEventListener('unmount', function () {
+    app.$destroy()
+})
 
-let instance = null
+// let instance = null
 
-function render (props = {}) {
-    const { container } = props
+// function render (props = {}) {
+//     const { container } = props
 
-    instance = new Vue({
-        router,
-        store,
-        i18n,
-        created: init,
-        render: (h) => h(App)
-    }).$mount(container ? container.querySelector('#app') : '#app')
-}
+//     instance = new Vue({
+//         router,
+//         store,
+//         i18n,
+//         created: init,
+//         render: (h) => h(App)
+//     }).$mount(container ? container.querySelector('#app') : '#app')
+// }
 
-// 独立运行时
-if (!window.__POWERED_BY_QIANKUN__) {
-    render()
-}
+// // 独立运行时
+// if (!window.__POWERED_BY_QIANKUN__) {
+//     render()
+// }
 
-if (window.__MICRO_APP_ENVIRONMENT__) {
-    window.addEventListener('unmount', function () {
-        instance.$destroy()
-        console.log('微应用app2卸载了')
-    })
-}
+// if (window.__MICRO_APP_ENVIRONMENT__) {
+//     window.addEventListener('unmount', function () {
+//         instance.$destroy()
+//         console.log('微应用app2卸载了')
+//     })
+// }
 
-export async function bootstrap () {
-    console.log('[vue] vue app bootstraped')
-}
-export async function mount (props = {}) {
-    console.log('[vue] props from main framework', props)
-    render(props)
-}
-export async function unmount () {
-    instance.$destroy()
-    instance.$el.innerHTML = ''
-    instance = null
-    // router = null;
-}
+// export async function bootstrap () {
+//     console.log('[vue] vue app bootstraped')
+// }
+// export async function mount (props = {}) {
+//     console.log('[vue] props from main framework', props)
+//     render(props)
+// }
+// export async function unmount () {
+//     instance.$destroy()
+//     instance.$el.innerHTML = ''
+//     instance = null
+//     // router = null;
+// }
