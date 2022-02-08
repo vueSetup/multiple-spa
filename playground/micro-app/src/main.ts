@@ -5,7 +5,6 @@ microApp.start({
             'app1': [{
                 loader(code) {
                     if (process.env.NODE_ENV === 'development') {
-                        console.log('code', code)
                         // 这里 /basename/ 需要和子应用vite.config.js中base的配置保持一致
                         code = code.replace(/(from|import)(\s*['"])(\/app1\/)/g, all => {
                             return all.replace('/app1/', 'http://localhost:6001/app1/')

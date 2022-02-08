@@ -5,6 +5,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
 import { join } from 'path';
+// import qiankun from 'vite-plugin-qiankun';
+// import { name } from './package.json';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -13,10 +15,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     base: env.VITE_BASE_URL,
     // 兼容 Cli
     define: {
-      'process.env.VITE': JSON.stringify(true),
       'process.env.BASE_URL': JSON.stringify(env.VITE_BASE_URL),
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
     },
+    // qiankun
     plugins: [vue(), vueJsx()],
     build: {
       cssCodeSplit: false,
@@ -67,9 +69,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     server: {
       host: true,
       port: 6001,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
       proxy: {
         '/api': {
           // backend url
