@@ -8,6 +8,10 @@
   width: 100%;
   min-height: 100vh;
 
+  .ant-pro-sider-fixed {
+    top: 32px;
+  }
+
   .@{ant-prefix}-layout-header {
     &.@{ant-prefix}-pro-fixed-header {
       position: fixed;
@@ -15,6 +19,7 @@
       transition: width 0.2s;
     }
   }
+
   .ant-pro-fixed-stuff {
     flex-shrink: 0;
     transition: width 0.2s;
@@ -35,7 +40,8 @@
         margin: 0;
       }
     }
-    > .@{ant-prefix}-layout {
+
+    >.@{ant-prefix}-layout {
       max-height: 100%;
     }
   }
@@ -48,16 +54,20 @@
   }
 
   .@{basicLayout-prefix-cls}-has-header {
+
     // tech-page-container
     .tech-page-container {
       height: calc(100vh - @pro-layout-header-height);
     }
+
     .@{basicLayout-prefix-cls}-is-children.@{basicLayout-prefix-cls}-has-header {
       .tech-page-container {
         height: calc(100vh - @pro-layout-header-height - @pro-layout-header-height);
       }
+
       .@{basicLayout-prefix-cls}-is-children {
         min-height: calc(100vh - @pro-layout-header-height);
+
         &.@{basicLayout-prefix-cls}-fix-siderbar {
           height: calc(100vh - @pro-layout-header-height);
         }
