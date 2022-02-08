@@ -9,9 +9,9 @@ onMounted(() => {
 <template>
   <div>
     <nav>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">关于</router-link>
       |
       <router-link to="/app1">子应用1</router-link>
       |

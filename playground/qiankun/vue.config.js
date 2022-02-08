@@ -9,6 +9,12 @@ module.exports = defineConfig({
         ws: false,
         changeOrigin: true,
       },
+      '/undefined': {
+        // backend url
+        target: 'https://store.antdv.com',
+        ws: false,
+        changeOrigin: true,
+      },
     },
   },
   transpileDependencies: true,

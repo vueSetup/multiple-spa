@@ -2,12 +2,12 @@ import { registerMicroApps, start } from "qiankun"
 import type { RegistrableApp, ObjectType } from 'qiankun'
 
 export const apps: RegistrableApp<ObjectType>[] = [
-    {
-        name: 'app1',
-        entry: '//localhost:6001/app1/',
-        container: '#subapp-viewport',
-        activeRule: '/app1'
-    },
+    // {
+    //     name: 'app1',
+    //     entry: '//localhost:6001/app1/',
+    //     container: '#subapp-viewport',
+    //     activeRule: '/app1'
+    // },
     {
         name: 'app2',
         entry: '//localhost:6002/app2/',

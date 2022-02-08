@@ -40,8 +40,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           target: 'https://store.antdv.com',
           ws: false,
           changeOrigin: true,
-        },
-      },
+        }
+      },      
     }
   }
 }

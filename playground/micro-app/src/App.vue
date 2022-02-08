@@ -1,11 +1,11 @@
 <template>
     <div>
-        <header>
-            <router-link to="/">main app</router-link>
-            <router-link to="/app1">app1</router-link>
-            <router-link to="/app2">app2</router-link>
-            <router-link to="/app3">app3</router-link>
-        </header>
+        <nav>
+            <router-link to="/">首页</router-link>
+            <router-link to="/app1">子应用1</router-link>
+            <router-link to="/app2">子应用2</router-link>
+            <router-link to="/app3">子应用3</router-link>
+        </nav>
         <router-view />
     </div>
 </template>

@@ -7,7 +7,6 @@
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "clean": "lerna clean",
-        "single-spa": "yarn workspace single-spa start",
         "qiankun": "pnpm -filter qiankun serve",
         "micro-app": "pnpm -filter micro-app start",
         "app1": "pnpm -filter vue-antd-pro-4 vite:dev",
