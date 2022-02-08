@@ -46,7 +46,7 @@ import {
   Upload,
   Badge,
 } from 'ant-design-vue';
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 // import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper';
 import router from './router';
 import store from './store';
@@ -59,72 +59,144 @@ import Authority from './utils/authority/authority.vue';
 import './app.less';
 import './router/router-guards';
 
-const app = createApp(App);
+// qiankun
+// eslint-disable-next-line import/first
+import singleSpaVue from 'single-spa-vue';
 
-app
-  .use(router)
-  .use(locale)
-  .use(store)
-  .use(Layout)
-  .use(Menu)
-  .use(Row)
-  .use(Col)
-  .use(Card)
-  .use(Form)
-  .use(Dropdown)
-  .use(Select)
-  .use(Button)
-  .use(Checkbox)
-  .use(Tabs)
-  .use(Tag)
-  .use(Input)
-  .use(DatePicker)
-  .use(TimePicker)
-  .use(Radio)
-  .use(Tooltip)
-  .use(Space)
-  .use(Steps)
-  .use(Divider)
-  .use(Descriptions)
-  .use(Alert)
-  .use(Result)
-  .use(Statistic)
-  .use(Popconfirm)
-  .use(Popover)
-  .use(Table)
-  .use(Avatar)
-  .use(List)
-  .use(Progress)
-  .use(Switch)
-  .use(Modal)
-  .use(Rate)
-  .use(ConfigProvider)
-  .use(Empty)
-  .use(Spin)
-  .use(Drawer)
-  .use(PageHeader)
-  .use(ProProvider)
-  .use(Badge)
-  .use(Carousel)
-  .use(BackTop)
-  .use(Upload)
-  .component(PageContainer.name, PageContainer)
-  .component(TransformVnode.name, TransformVnode)
-  .component(Authority.name, Authority);
+// TODO :: https://github.com/single-spa/single-spa-vue/blob/main/src/single-spa-vue.js
+const lifecycle = singleSpaVue({
+  createApp,
+  appOptions: {
+    render: () => h(App),
+    el: '#subapp-viewport',
+  },
+  handleInstance: app => {
+    app
+      .use(router)
+      .use(locale)
+      .use(store)
+      .use(Layout)
+      .use(Menu)
+      .use(Row)
+      .use(Col)
+      .use(Card)
+      .use(Form)
+      .use(Dropdown)
+      .use(Select)
+      .use(Button)
+      .use(Checkbox)
+      .use(Tabs)
+      .use(Tag)
+      .use(Input)
+      .use(DatePicker)
+      .use(TimePicker)
+      .use(Radio)
+      .use(Tooltip)
+      .use(Space)
+      .use(Steps)
+      .use(Divider)
+      .use(Descriptions)
+      .use(Alert)
+      .use(Result)
+      .use(Statistic)
+      .use(Popconfirm)
+      .use(Popover)
+      .use(Table)
+      .use(Avatar)
+      .use(List)
+      .use(Progress)
+      .use(Switch)
+      .use(Modal)
+      .use(Rate)
+      .use(ConfigProvider)
+      .use(Empty)
+      .use(Spin)
+      .use(Drawer)
+      .use(PageHeader)
+      .use(ProProvider)
+      .use(Badge)
+      .use(Carousel)
+      .use(BackTop)
+      .use(Upload)
+      .component(PageContainer.name, PageContainer)
+      .component(TransformVnode.name, TransformVnode)
+      .component(Authority.name, Authority);
 
-useIcons(app);
-
-if (!process.env.VITE) {
-  app.mount('#app');
-} else {
-  app.mount('#vite-app');
-}
-
-// micro-app:监听卸载操作
-window.addEventListener('unmount', function () {
-  app.unmount();
+    useIcons(app);
+  },
 });
 
+export const bootstrap = lifecycle.bootstrap;
+export const mount = lifecycle.mount;
+export const unmount = lifecycle.unmount;
+
+if (!window.__POWERED_BY_QIANKUN__) {
+  const app = createApp(App);
+  app
+    .use(router)
+    .use(locale)
+    .use(store)
+    .use(Layout)
+    .use(Menu)
+    .use(Row)
+    .use(Col)
+    .use(Card)
+    .use(Form)
+    .use(Dropdown)
+    .use(Select)
+    .use(Button)
+    .use(Checkbox)
+    .use(Tabs)
+    .use(Tag)
+    .use(Input)
+    .use(DatePicker)
+    .use(TimePicker)
+    .use(Radio)
+    .use(Tooltip)
+    .use(Space)
+    .use(Steps)
+    .use(Divider)
+    .use(Descriptions)
+    .use(Alert)
+    .use(Result)
+    .use(Statistic)
+    .use(Popconfirm)
+    .use(Popover)
+    .use(Table)
+    .use(Avatar)
+    .use(List)
+    .use(Progress)
+    .use(Switch)
+    .use(Modal)
+    .use(Rate)
+    .use(ConfigProvider)
+    .use(Empty)
+    .use(Spin)
+    .use(Drawer)
+    .use(PageHeader)
+    .use(ProProvider)
+    .use(Badge)
+    .use(Carousel)
+    .use(BackTop)
+    .use(Upload)
+    .component(PageContainer.name, PageContainer)
+    .component(TransformVnode.name, TransformVnode)
+    .component(Authority.name, Authority);
+
+  useIcons(app);
+  // micro-app
+  const container = document.querySelector('#vite-app');
+  if (container) {
+    app.mount(container);
+  } else {
+    app.mount('#app');
+  }
+  if (window.__MICRO_APP_ENVIRONMENT__) {
+    window.addEventListener('unmount', function () {
+      app.unmount();
+    });
+  }
+}
 // let instance = null;
 
 // function render() {

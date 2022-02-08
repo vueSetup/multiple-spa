@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 // const webpack = require('webpack');
+const { name } = require('./package.json');
 const { IgnorePlugin } = require('webpack');
 const { createMockMiddleware } = require('umi-mock-middleware');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -18,6 +19,10 @@ function resolve(dir) {
 module.exports = {
   publicPath: process.env.BASE_URL,
   configureWebpack: {
+    output: {
+      library: `${name}-[name]`,
+      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+    },
     plugins: [
       // Ignore all locale files of moment.js
       new IgnorePlugin({

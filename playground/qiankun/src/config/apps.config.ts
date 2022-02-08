@@ -1,4 +1,5 @@
-import { RegistrableApp, ObjectType } from 'qiankun'
+import { registerMicroApps, start } from "qiankun"
+import type { RegistrableApp, ObjectType } from 'qiankun'
 
 export const apps: RegistrableApp<ObjectType>[] = [
     {
@@ -21,4 +22,7 @@ export const apps: RegistrableApp<ObjectType>[] = [
     }
 ]
 
-export default apps
+export const bootstrap = () => {
+    registerMicroApps(apps)
+    start()
+}

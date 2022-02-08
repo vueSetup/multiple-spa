@@ -20,7 +20,7 @@ import init from './core/bootstrap'
 import './core/lazy_use' // use lazy load components
 import './permission' // permission control
 import './utils/filter' // global filter
-import './global.less' // global style
+import './global.less'
 
 Vue.config.productionTip = false
 
@@ -33,57 +33,41 @@ Vue.component('page-header-wrapper', PageHeaderWrapper)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 
-const app = new Vue({
+// qiankun
+// eslint-disable-next-line import/first
+import singleSpaVue from 'single-spa-vue'
+
+// TODO :: https://github.com/single-spa/single-spa-vue/blob/main/src/single-spa-vue.js
+const lifecycle = singleSpaVue({
+  Vue,
+  appOptions: {
+    router,
+    store,
+    i18n,
+    created: init,
+    render: h => h(App),
+    el: '#subapp-viewport'
+  }
+})
+
+export const bootstrap = lifecycle.bootstrap
+export const mount = lifecycle.mount
+export const unmount = lifecycle.unmount
+
+if (!window.__POWERED_BY_QIANKUN__) {
+  const app = new Vue({
     router,
     store,
     i18n,
     // init localstorage, vuex, Logo message
     created: init,
-    render: (h) => h(App)
-}).$mount('#app')
-console.log('微应用app2渲染了')
+    render: h => h(App)
+  }).$mount('#app')
 
-// micro-app:监听卸载操作
-window.addEventListener('unmount', function () {
-    app.$destroy()
-})
-
-// let instance = null
-
-// function render (props = {}) {
-//     const { container } = props
-
-//     instance = new Vue({
-//         router,
-//         store,
-//         i18n,
-//         created: init,
-//         render: (h) => h(App)
-//     }).$mount(container ? container.querySelector('#app') : '#app')
-// }
-
-// // 独立运行时
-// if (!window.__POWERED_BY_QIANKUN__) {
-//     render()
-// }
-
-// if (window.__MICRO_APP_ENVIRONMENT__) {
-//     window.addEventListener('unmount', function () {
-//         instance.$destroy()
-//         console.log('微应用app2卸载了')
-//     })
-// }
-
-// export async function bootstrap () {
-//     console.log('[vue] vue app bootstraped')
-// }
-// export async function mount (props = {}) {
-//     console.log('[vue] props from main framework', props)
-//     render(props)
-// }
-// export async function unmount () {
-//     instance.$destroy()
-//     instance.$el.innerHTML = ''
-//     instance = null
-//     // router = null;
-// }
+  // micro-app
+  if (window.__MICRO_APP_ENVIRONMENT__) {
+    window.addEventListener('unmount', function () {
+      app.$destroy()
+    })
+  }
+}
