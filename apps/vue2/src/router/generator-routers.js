@@ -56,11 +56,11 @@ const constantRouterComponents = {
 }
 
 // 前端未找到页面路由（固定不用改）
-const notFoundRouter = {
-  path: '*',
-  redirect: '/404',
-  hidden: true
-}
+// const notFoundRouter = {
+//   path: '*',
+//   redirect: '/404',
+//   hidden: true
+// }
 
 // 根级菜单
 const rootRouter = {

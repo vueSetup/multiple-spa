@@ -8,6 +8,7 @@ onMounted(() => {
 </script>
 <template>
   <div>
+    <h3>QianKun</h3>
     <nav>
       <router-link to="/">首页</router-link>
       |
