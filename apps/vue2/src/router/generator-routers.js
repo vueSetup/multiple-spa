@@ -95,7 +95,7 @@ export const generatorDynamicRouter = token => {
         menuNav.push(rootRouter)
         console.log('menuNav', menuNav)
         const routers = generator(menuNav)
-        routers.push(notFoundRouter)
+        // routers.push(notFoundRouter)
         console.log('routers', routers)
         resolve(routers)
       })
